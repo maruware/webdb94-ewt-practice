@@ -1,0 +1,12 @@
+timezone: Asia/Tokyo
+schedule:
+  daily>: 17:00:00
+
++extract:
+  sh>: curl http://www.mizuhobank.co.jp/rate/market/csv/quote.csv -o quote_tmp.csv
+
++transform:
+  sh>: sed -e '1,2d' quote_tmp.csv | cut -d ',' -f -30 > quote.csv
+
++load:
+  sh>: embulk run config.yml
